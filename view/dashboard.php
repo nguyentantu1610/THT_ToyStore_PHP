@@ -111,7 +111,7 @@ $resulttop = $controller->countTop10Product();
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"></div>
+                                        <div class="stat-text"><?php echo $result2 ?></div>
                                         <div class="stat-heading"> Tổng doanh thu</div>
                                     </div>
                                 </div>
@@ -155,17 +155,6 @@ $resulttop = $controller->countTop10Product();
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center ">
-                            <strong class="card-title">Top sản phẩm bán chạy</strong>
-
-                        </div>
-                        <div class="card-body">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
@@ -178,9 +167,12 @@ $resulttop = $controller->countTop10Product();
                                 var labels = [];
                                 var data = [];
 
-                                <?php foreach ($result1 as $document) { ?>
-                                    labels.push('<?php echo $document['productName']; ?>');
-                                    data.push(<?php echo $document['productStock']; ?>);
+                                <?php foreach ($resulttop as $document) { ?>
+                                    labels.push('<?php
+                                                    $productController = new ProductController();
+                                                    $product = $productController->getProductById($document['_id']);
+                                                    echo $product['productName']; ?>');
+                                    data.push(<?php echo $document['count']; ?>);
                                 <?php } ?>
 
                                 var ctx = document.getElementById('product-chart').getContext('2d');
@@ -221,65 +213,6 @@ $resulttop = $controller->countTop10Product();
     <?php include 'footer.php' ?>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var data = {
-            labels: [
-                <?php foreach ($resulttop as $documenttop) {
-                    foreach ($resultall as $all) {
-                        if ($documenttop['_id'] ==  $all['productID']) {
-                            echo "'" . $all['productName'] . "',";
-                            break;
-                        }
-                    }
-                } ?>
-            ],
-            datasets: [{
-                data: [
-                    <?php foreach ($resulttop as $documenttop) {
-                        echo $documenttop['count'] . ",";
-                    } ?>
-                ],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(153, 102, 255, 0.7)',
-                    'rgba(255, 159, 64, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-        var options = {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'right',
-                labels: {
-                    fontSize: 14
-                }
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        };
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: options
-        });
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/flot-charts@0.8.3/excanvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flot-charts@0.8.3/jquery.flot.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.pie.min.js"></script>

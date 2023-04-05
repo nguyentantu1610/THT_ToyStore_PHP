@@ -29,7 +29,7 @@ class BillDetailService
                 // Group by productId and count the occurrences of each productId
                 '$group' => [
                     '_id' => '$productID',
-                    'count' => ['$sum' => 1]
+                    'count' => ['$sum' => '$productQuantity']
                 ]
             ],
             [

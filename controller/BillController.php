@@ -46,9 +46,9 @@ class BillController
                 $total += $item['productQuantity'] * $item['productPrice'];
                 $dt = array(
                     'billID' => $this->billService->getNextID(),
-                    'productID' => $item['productID'],
-                    'productQuantity' => $item['productQuantity'],
-                    'productCost' => $item['productPrice']
+                    'productID' => (int)$item['productID'],
+                    'productQuantity' => (int)$item['productQuantity'],
+                    'productCost' => (int)$item['productPrice']
                 );
                 $this->billDetailService->create($dt);
             }
@@ -59,7 +59,7 @@ class BillController
                 'billDate' => date('m/d/Y h:i:s a', time()),
                 'total' => $total,
                 'userID' => $user['userID'],
-                'billPhoneNumber' => $_POST['userPhoneNumber'],
+                'billPhoneNumber' => (int)$_POST['userPhoneNumber'],
                 'billState' => "Chờ duyệt",
                 'billDeliveryAddress' => $_POST['userAddress'],
             );

@@ -239,7 +239,7 @@ $controller->createBill();
 								?>
 									<li>
 										<span><?php echo $item['productName']; ?></span>
-										<span><?php echo number_format($item['productPrice'], 2, ",", ".") . ' đ'; ?></span>
+										<span><?php echo number_format($item['productPrice'] * $item['productQuantity'], 2, ",", ".") . ' đ'; ?></span>
 									</li>
 								<?php
 								} ?>

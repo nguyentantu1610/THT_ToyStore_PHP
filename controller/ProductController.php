@@ -25,7 +25,7 @@ class ProductController
     }
 
     public function getTotalProductPage($categoryID) {
-        $pageSize = 2;
+        $pageSize = 8;
         $count = 0;
         if ($categoryID != null) {
             $result = $this->productService->getAllByCategoryID($categoryID);

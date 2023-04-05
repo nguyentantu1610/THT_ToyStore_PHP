@@ -27,7 +27,7 @@
 
     public function getPage($pageNum, $categoryID)
     {
-      $pageSize = 2;
+      $pageSize = 8;
       $start = ($pageNum - 1) * $pageSize;
       $options = [
         'skip' => $start,

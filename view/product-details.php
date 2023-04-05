@@ -14,6 +14,11 @@ if (isset($_GET['cartID'])) {
 	session_start();
 	$qty = $_GET['qty'];
 	$product = $controller->getProductById($_GET['cartID']);
+	if ($qty > $product['productStock']) {
+		$qty = $product['productStock'];
+	} elseif ($qty <= 0) {
+		$qty = 1;
+	}
 	$data = array(
 		'productID' => $_GET['cartID'],
 		'productName' => $product['productName'],
@@ -35,9 +40,6 @@ if (isset($_GET['cartID'])) {
 				}
 				break;
 			}
-			/*if ($value['productID'] == $_GET['cartID']) {
-                unset($_SESSION['cart'][$key]);
-            }*/
 		}
 		if (!$state) {
 			$array = $_SESSION['cart'];
@@ -286,19 +288,19 @@ if (isset($_GET['cartID'])) {
 							</h2>
 
 							<div>
-								<p style="float: left; width: 33%;">
-									<strong>Nhà cung cấp:</strong>
-									<?php
-									$publisherController = new PublisherController();
-									$publisher = $publisherController->getPublisherById($product['publisherID']);
-									echo $publisher['publisherName'];
-									?>
-								</p>
+								<strong>Nhà cung cấp:</strong>
+								<?php
+								$publisherController = new PublisherController();
+								$publisher = $publisherController->getPublisherById($product['publisherID']);
+								echo $publisher['publisherName'];
+								?>
 							</div>
 
-							<h4 class="price" style="margin-top: 30px;">
-								Giá: <?php echo number_format($product['productPrice'], 2, ",", ".") . ' đ'; ?>
-							</h4>
+							<div>
+								<h4 class="price" style="margin-top: 30px;">
+									Giá: <?php echo number_format($product['productPrice'], 2, ",", ".") . ' đ'; ?>
+								</h4>
+							</div>
 
 							<div class="single_product_ratings mb-15">
 								<i class="fa fa-star" aria-hidden="true"></i>
