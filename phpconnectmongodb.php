@@ -5,7 +5,7 @@ require_once __DIR__ . "/vendor/autoload.php";
 // connect to MongoDB
 function Getmongodb($namedb, $namecollection)
 {
-    $client = new MongoDB\Client("mongodb+srv://phantoan045:123123asD@dbwebflower.cxvlwuj.mongodb.net/?retryWrites=true&w=majority");
+    $client = new MongoDB\Client("connection_string");
     // select a database
     $database = $client->selectDatabase($namedb);
     // select a collection
